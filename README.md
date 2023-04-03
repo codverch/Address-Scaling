@@ -11,7 +11,9 @@ https://www.gem5.org/getting_started/
 
 ### Installing dependencies
 
+```sh
 sudo apt install -y python3 python3-six python-is-python3 python3-pydot
+```
 
 ### Setting up the python3 virtualenv
 
