@@ -6,9 +6,10 @@
 #include <stdio.h>
 // Declares functions for dynamically loading and using shared libraries
 #include <dlfcn.h>
+// For environment variables
+#include <stdlib.h>
 
 static void *(*real_malloc)(size_t) = NULL;
-static int scale_factor = 2;
 
 static void mtrace_init(void)
 {
@@ -27,6 +28,10 @@ void *malloc(size_t size)
     }
 
     void *p = NULL;
+    // Get environment variable
+    char *scale = getenv("SCALE_FACTOR");
+    // Set the environment variable received from the user
+    int scale_factor = atoi(scale);
     size_t scaled_size = size * scale_factor;
     fprintf(stderr, "\nmalloc (%d) = ", scaled_size);
     p = real_malloc(scaled_size);

@@ -6,9 +6,10 @@
 
 int main(int argc, char *argv[])
 {
-
+    
     // Pointers to calculate the sum of two arrays and store the result in a third array
     int *a, *b, *c;
+
 
     int s = 0, j = 0; // s - optarg(), j - for index
 
@@ -60,9 +61,9 @@ int main(int argc, char *argv[])
 
     // Allocate heap memory for the arrays
 
-    a = (int *)malloc(16 * n * sizeof(int));
-    b = (int *)malloc(16 * n * sizeof(int));
-    c = (int *)malloc(16 * n * sizeof(int));
+    a = (int *)malloc((16 * n * sizeof(int)), 2);
+    b = (int *)malloc((16 * n * sizeof(int)), 2);
+    c = (int *)malloc((16 * n * sizeof(int)), 2);
 
     // Assign values to the arrays - random values between 0 and 99
     // Store only one element in a cacheline and fill the rest of the elements in a cacheline with zeros
