@@ -30,6 +30,8 @@ void *malloc(size_t size)
     void *p = NULL;
     // Get environment variable
     char *scale = getenv("SCALE_FACTOR");
+    // Print the scale factor
+    fprintf(stderr, "\nScale factor: %s\n", scale);
     // Set the environment variable received from the user
     int scale_factor = atoi(scale);
     size_t scaled_size = size * scale_factor;
