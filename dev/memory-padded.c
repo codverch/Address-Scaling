@@ -61,9 +61,13 @@ int main(int argc, char *argv[])
 
     // Allocate heap memory for the arrays
 
-    a = (int *)malloc((16 * n * sizeof(int)), 2);
-    b = (int *)malloc((16 * n * sizeof(int)), 2);
-    c = (int *)malloc((16 * n * sizeof(int)), 2);
+    a = (int *)malloc(16 * n * sizeof(int));
+    b = (int *)malloc(16 * n * sizeof(int));
+    c = (int *)malloc(16 * n * sizeof(int));
+
+        printf("hello");
+    // Print the sizes of malloc requested for each array
+    printf("\nSize of a: %ld\n", 16 * n * sizeof(int));
 
     // Assign values to the arrays - random values between 0 and 99
     // Store only one element in a cacheline and fill the rest of the elements in a cacheline with zeros
