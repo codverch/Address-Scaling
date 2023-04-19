@@ -6,7 +6,9 @@
 
 ```SCALE_FACTOR=<value of scaling factor> LD_PRELOAD=/path/to/asmalloc.so ./build/X86/gem5.opt /path/to/config.py <command line arguments>```
 
-``` python
+#### Example
+
+```
 
 For example, to run the config.py script with scaling factor 2, we can use the following command:
 
