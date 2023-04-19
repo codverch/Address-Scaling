@@ -1,2 +1,2 @@
-SCALE_FACTOR=190000000000000000000000000000000000000000000000000000000232323209809808
-LD_PRELOAD=configs/learning_gem5/000_exp/asmalloc.so
+SCALE_FACTOR=3000000000
+LD_PRELOAD="/home/gandiva/deepanjali/projects/address-scaling/Address-Scaling/gem5-source/configs/learning_gem5/000_exp/asmalloc.so"
