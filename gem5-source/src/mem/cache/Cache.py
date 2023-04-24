@@ -86,6 +86,8 @@ class BaseCache(ClockedObject):
     size = Param.MemorySize("Capacity")
     assoc = Param.Unsigned("Associativity")
 
+    
+
     tag_latency = Param.Cycles("Tag lookup latency")
     data_latency = Param.Cycles("Data access latency")
     response_latency = Param.Cycles("Latency for the return path on a miss")
@@ -178,6 +180,7 @@ class Cache(BaseCache):
     type = "Cache"
     cxx_header = "mem/cache/cache.hh"
     cxx_class = "gem5::Cache"
+
 
 
 class NoncoherentCache(BaseCache):
