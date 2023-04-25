@@ -7,27 +7,36 @@
 */
 
 #include "mem/as_table.hh"
+#include "base/types.hh"
 
 
 namespace gem5
 {
 
     /* Constructor */
-    AdressScalingTable::AdressScalingTable()
+    AddressScalingTable::AddressScalingTable( int _scalingFactor)
     {
-        // Initialize the address scaling table
-        asTable = std::vector<AddressScalingEntry>();
+
+        // Set the scaling factor
+        scalingFactor = _scalingFactor;
+
     }
 
     /* Add an entry to the Address Scaling Table */
     void 
-    AdressScalingTable::addEntry(Addr _startVirtualAddress, Addr _endVirtualAddress,  Addr _scalingFactor)
+    AddressScalingTable::addEntry(Addr _startVirtualAddress, Addr _endVirtualAddress,  int _scalingFactor)
     {
+
+        // Check that the end virtual address is greater than or equal to the start virtual address
+        if (_endVirtualAddress < _startVirtualAddress) 
+        {
+            std::cout << "End virtual address must be greater than or equal to start virtual address" << std::endl;
+        }
+        
         // Create a new entry
         AddressScalingEntry newEntry;
         newEntry.startVirtualAddress = _startVirtualAddress;
         newEntry.endVirtualAddress = _endVirtualAddress;
-        newEntry.scalingFactor = _scalingFactor;
         // Set the start and end scaled virtual address to 0, they will be set later
         newEntry.startScaledVirtualAddress = 0;
         newEntry.endScaledVirtualAddress = 0;
@@ -38,7 +47,7 @@ namespace gem5
 
     /* Check if the requested address falls within the virtual address range of any segment */
     bool
-    AddressScalingEntry::checkAddress(Addr requestAddress)
+    AddressScalingTable::checkAddress(Addr requestAddress)
     {
         // Iterate through the address scaling table
         for (int i = 0; i < asTable.size(); i++)
@@ -54,23 +63,51 @@ namespace gem5
         return false;
     }
 
-    /* Update an Address Scaling Table Entry */
-    void
-    AddressScalingEntry::updateEntry(Addr _startVirtualAddress, Addr _startScaledVirtualAddress, Addr _endScaledVirtualAddress)
+   
+    /* Scale the request address */
+    
+    Addr
+    AddressScalingTable::scaleAddress(Addr requestAddress)
     {
-        // Iterate through the address scaling table
-        for (int i = 0; i < asTable.size(); i++)
+    // Check if the requested address falls within the virtual address range of any segment
+    if (checkAddress(requestAddress))
+    {
+        // Find the segment that contains the request address
+        AddressScalingEntry segment;
+        for (auto& entry : asTable)
         {
-            // Check if the start virtual address of the entry matches the start virtual address of the segment
-            if (asTable[i].startVirtualAddress == _startVirtualAddress)
+            if (requestAddress >= entry.startVirtualAddress && requestAddress <= entry.endVirtualAddress)
             {
-                // Update the scaled virtual address range of the segment
-                asTable[i].startScaledVirtualAddress = _startScaledVirtualAddress;
-                asTable[i].endScaledVirtualAddress = _endScaledVirtualAddress;
+                segment = entry;
+                break;
             }
         }
+
+        // Calculate the scaled address with the offset
+        Addr offset = requestAddress - segment.startVirtualAddress;
+        Addr scaledAddress = (offset * scalingFactor) + segment.startScaledVirtualAddress;
+
+        // Update the scaled virtual address range of the segment
+        updateAddressScalingEntry(segment, segment.startVirtualAddress, segment.endVirtualAddress);
+
+        return scaledAddress;
+    }
+
+    // If the request address does not fall within the virtual address range of any segment, do not scale the address
+    return requestAddress;
+   
+    }
+
+
+    /* Update an Address Scaling Entry */
+    void 
+    AddressScalingTable::updateAddressScalingEntry(AddressScalingEntry &entry, Addr _startVirtualAddress, Addr _endVirtualAddress)
+    {
+        // Calculate the scaled virtual address range
+        entry.startScaledVirtualAddress = entry.startVirtualAddress;
+        entry.endScaledVirtualAddress = entry.endVirtualAddress;
     }
     
-    /* Scale the request address */
+        
    
 }

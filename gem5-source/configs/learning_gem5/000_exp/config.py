@@ -19,8 +19,16 @@ from common import SimpleOpts
 thispath = os.path.dirname(os.path.realpath(__file__))
 default_binary = os.path.join(
     thispath,
-    "/home/gandiva/deepanjali/projects/address-scaling/Address-Scaling/gem5-source/configs/learning_gem5/000_exp/test"
+    "test"
 )
+
+
+import os
+print(" Deepanjali, LD_PRELOAD=", os.environ.get("LD_PRELOAD"))
+
+# Print the scale factor
+print("Scale factor: ", os.environ.get("SCALE_FACTOR"))
+
 
 
 # Binary to execute
