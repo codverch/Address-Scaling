@@ -63,6 +63,9 @@
 #include "mem/request.hh"
 #include "sim/byteswap.hh"
 
+// Address Scaling Table
+#include "mem/as_table.hh"
+
 namespace gem5
 {
 
@@ -802,7 +805,9 @@ class Packet : public Printable
 
     void copyError(Packet *pkt) { assert(pkt->isError()); cmd = pkt->cmd; }
 
-    Addr getAddr() const { assert(flags.isSet(VALID_ADDR)); return addr; }
+    Addr getAddr() const { 
+            
+        assert(flags.isSet(VALID_ADDR)); return addr; }
     /**
      * Update the address of this packet mid-transaction. This is used
      * by the address mapper to change an already set address to a new

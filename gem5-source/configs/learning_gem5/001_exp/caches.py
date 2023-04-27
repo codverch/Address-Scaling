@@ -19,6 +19,7 @@ SimpleOpts.add_option('-e', help=" " )
 # Number of iterations to run the simulation for
 SimpleOpts.add_option('-t', help=" " )
 
+
 class L1Cache(Cache):
     """Simple L1 Cache with default values"""
 

@@ -14,13 +14,17 @@ from caches import *
 # import the SimpleOpts module
 from common import SimpleOpts
 
-# grab the specific path to the binary
+import os
+
+
+# Get the path to the binary
 thispath = os.path.dirname(os.path.realpath(__file__))
-default_binary = os.path.join(
-    thispath,
-    "test"
-)
-# Binary to execute
+default_binary = os.path.join(thispath, "test")
+
+print("Scale factor: ", os.environ.get("SCALING_FACTOR"))
+
+
+# Binary to executeb
 SimpleOpts.add_option("binary", nargs='?', default=default_binary)
 
 # Finalize the arguments and grab the args so we can pass it on to our objects
@@ -123,6 +127,7 @@ parser.add_argument("--l3_size",
 parser.add_argument("-n", "--nums", type=int, help="number of elements in each array", default="2")
 parser.add_argument("-e", "--error", type=str, help="error to be injected", default="bo")
 parser.add_argument("-t", "--iterations", type=int, help="number of iterations", default="1")
+
 
 options = parser.parse_args()
 

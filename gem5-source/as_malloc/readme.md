@@ -16,7 +16,7 @@ gcc -shared -fPIC -o as_malloc.so as_malloc.c
 3) Export the library path using the following command:
 
 ```sh
-     export LD_LIBRARY_PATH=/path/to/as_malloc:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/path/to/as_malloc:$LD_LIBRARY_PATH
 ```
 4) Compile the application 
 

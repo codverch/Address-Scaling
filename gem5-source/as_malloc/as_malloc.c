@@ -14,7 +14,10 @@ int scaling_factor;
 
 // Receives the scaling_factor via environment variable
 void init_scaling_factor() {
-    char *env_scaling_factor = getenv("SCALING_FACTOR");
+    char *env_scaling_factor = getenv("SCALING_FACTOR"); 
+     
+    // Print the scaling factor
+    printf("Scaling factor: %s\n", env_scaling_factor);
     if (env_scaling_factor == NULL) {
         scaling_factor = 2;
     } else {
@@ -30,8 +33,10 @@ void *as_malloc(size_t size) {
 
     // Print how much memory is being allocated
     printf("Allocating %d bytes\n", size * scaling_factor);
-
-    return malloc(size * scaling_factor);
+    
+    void *result = malloc(size * scaling_factor);
+    m5_malloc_call(result, size, scaling_factor);
+    return result;
 }
 
 // Free the memory space pointed to by ptr, which must have been returned by a previous call to malloc().

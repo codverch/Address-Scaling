@@ -4,6 +4,8 @@
 #include <time.h>   // for clock()
 #include <string.h> // for strcmp()
 
+#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/asmalloc/as_malloc.h"
+
 int main(int argc, char *argv[])
 {
 
@@ -60,10 +62,12 @@ int main(int argc, char *argv[])
 
     // Allocate heap memory for the arrays
 
-    a = (int *)malloc(16 * n * sizeof(int));
-    b = (int *)malloc(16 * n * sizeof(int));
-    c = (int *)malloc(16 * n * sizeof(int));
+    a = (int *)as_malloc(16 * n * sizeof(int));
+    b = (int *)as_malloc(16 * n * sizeof(int));
+    c = (int *)as_malloc(16 * n * sizeof(int));
 
+    // Print the amount of memory requested for array-1
+    printf("The amount of memory requested for array-1 is %d bytes", 16 * n * sizeof(int));
 
     // Assign values to the arrays - random values between 0 and 99
     // Store only one element in a cacheline and fill the rest of the elements in a cacheline with zeros
@@ -113,9 +117,9 @@ int main(int argc, char *argv[])
         printf("\nBefore freeing: %d\n", *(c + 1));
 
         // Free the memory locations and then try to access it
-        free(a);
-        free(b);
-        free(c);
+        as_free(a);
+        as_free(b);
+        as_free(c);
 
         printf("After freeing: %d\n", *(c + 1));
 
@@ -127,13 +131,13 @@ int main(int argc, char *argv[])
     {
         // Free the memory twice : to introduce double-free-error
 
-        free(a);
-        free(b);
-        free(c);
+        as_free(a);
+        as_free(b);
+        as_free(c);
 
-        free(a);
-        free(b);
-        free(c);
+        as_free(a);
+        as_free(b);
+        as_free(c);
 
         // Occurs in multi-threaded programs
     }
@@ -147,9 +151,9 @@ int main(int argc, char *argv[])
         printf(" To be filled \n");
     }
 
-    free(a);
-    free(b);
-    free(c);
+    as_free(a);
+    as_free(b);
+    as_free(c);
 
     return 0;
 }
