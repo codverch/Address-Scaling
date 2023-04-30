@@ -32,10 +32,10 @@ void *as_malloc(size_t size) {
     }
 
     // Print how much memory is being allocated
-    printf("Allocating %d bytes\n", size * scaling_factor);
+    printf("Allocating %ld bytes\n", size * scaling_factor);
     
     void *result = malloc(size * scaling_factor);
-    m5_malloc_call(result, size, scaling_factor);
+    // m5_malloc_call(result, size, scaling_factor);
     return result;
 }
 

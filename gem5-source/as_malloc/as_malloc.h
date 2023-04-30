@@ -7,6 +7,9 @@
 #define AS_MALLOC_H
 
 #include <stdlib.h>
+// Header for m5op
+// #include "gem5/m5ops.h"
+
 
 // Initialize the scaling factor
 void init_scaling_factor();
