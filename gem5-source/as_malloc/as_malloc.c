@@ -1,53 +1,62 @@
 /*
-    * as_malloc.c
-    * Allocates scaling_factor * size bytes using malloc
-    * Created on: 26-04-2023
-*/
+ * as_malloc.c
+ * Allocates scaling_factor * size bytes using malloc
+ * Created on: 26-04-2023
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include "as_malloc.h"
+#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/as_malloc/as_malloc.h"
+// Header for m5op
+#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/include/gem5/m5ops.h"
+#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/include/gem5/asm/generic/m5ops.h"
 
 int scaling_factor;
 
 // Receives the scaling_factor via environment variable
-void init_scaling_factor() {
-    char *env_scaling_factor = getenv("SCALING_FACTOR"); 
-     
+void init_scaling_factor()
+{
+    char *env_scaling_factor = getenv("SCALING_FACTOR");
+
     // Print the scaling factor
     printf("Scaling factor: %s\n", env_scaling_factor);
-    if (env_scaling_factor == NULL) {
+    if (env_scaling_factor == NULL)
+    {
         scaling_factor = 2;
-    } else {
+    }
+    else
+    {
         scaling_factor = atoi(env_scaling_factor);
     }
 }
 
 // Allocates scaling_factor * size bytes using malloc
-void *as_malloc(size_t size) {
-    if (scaling_factor == 0) {
+void *as_malloc(size_t size)
+{
+    if (scaling_factor == 0)
+    {
         init_scaling_factor();
     }
 
     // Print how much memory is being allocated
     printf("Allocating %ld bytes\n", size * scaling_factor);
-    
+
     void *result = malloc(size * scaling_factor);
     // m5_malloc_call(result, size, scaling_factor);
+
+    // Convert result pointer to an integer
+    uint64_t vaddr = (uint64_t)result;
+
+    // Call the m5op's as_malloc_call
+    m5_as_table_set(vaddr, size);
+
     return result;
 }
 
 // Free the memory space pointed to by ptr, which must have been returned by a previous call to malloc().
-void as_free(void *ptr) {
+void as_free(void *ptr)
+{
     free(ptr);
 }
-
-
-
-
-
-
-
-

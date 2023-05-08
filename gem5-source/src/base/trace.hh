@@ -177,6 +177,9 @@ struct StringWrap
  * @{
  */
 
+#define TRACING_ON 1
+
+
 #define DDUMP(x, data, count) do {               \
     if (GEM5_UNLIKELY(TRACING_ON && ::gem5::debug::x))     \
         ::gem5::trace::getDebugLogger()->dump(           \

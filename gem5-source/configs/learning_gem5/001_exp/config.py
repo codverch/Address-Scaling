@@ -15,16 +15,18 @@ from caches import *
 from common import SimpleOpts
 
 import os
-
+os.environ["LD_LIBRARY_PATH"] = "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/as_malloc:" + os.environ.get("LD_LIBRARY_PATH", "")
+os.environ["SCALING_FACTOR"] = "5"
 
 # Get the path to the binary
 thispath = os.path.dirname(os.path.realpath(__file__))
+
+print("LD_LIBRARY_PATH: ", os.environ.get("LD_LIBRARY_PATH"))
+print("Scale factor: ", os.environ.get("SCALING_FACTOR"))
 default_binary = os.path.join(thispath, "test")
 
-print("Scale factor: ", os.environ.get("SCALING_FACTOR"))
 
-
-# Binary to executeb
+# Binary to execute
 SimpleOpts.add_option("binary", nargs='?', default=default_binary)
 
 # Finalize the arguments and grab the args so we can pass it on to our objects

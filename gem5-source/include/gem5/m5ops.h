@@ -35,7 +35,8 @@ extern "C" {
 
 #include <stdint.h>
 
-#include <gem5/asm/generic/m5ops.h>
+// #include <gem5/asm/generic/m5ops.h>
+#include "asm/generic/m5ops.h"
 
 void m5_arm(uint64_t address);
 void m5_quiesce(void);
@@ -66,6 +67,10 @@ void m5_load_symbol();
 void m5_panic(void);
 void m5_work_begin(uint64_t workid, uint64_t threadid);
 void m5_work_end(uint64_t workid, uint64_t threadid);
+
+// Address-Scaling table interface
+// Parameters: vaddr, size (Virtual address of the allocated memory, size of the memory requested by the application)
+void m5_as_table_set(uint64_t vaddr, uint64_t size);
 
 /*
  * Send a very generic poke to the workload so it can do something. It's up to

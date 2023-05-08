@@ -50,8 +50,8 @@
 
 #include "base/compiler.hh"
 #include "base/logging.hh"
-#include "base/trace.hh"
 #include "base/types.hh"
+#include "base/trace.hh"
 #include "debug/Cache.hh"
 #include "debug/CacheTags.hh"
 #include "debug/CacheVerbose.hh"

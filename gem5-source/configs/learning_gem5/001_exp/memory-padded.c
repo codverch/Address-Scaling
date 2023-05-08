@@ -4,7 +4,8 @@
 #include <time.h>   // for clock()
 #include <string.h> // for strcmp()
 
-#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/asmalloc/as_malloc.h"
+#include "../../../as_malloc/as_malloc.h"
+#include "../../../include/gem5/m5ops.h"
 
 int main(int argc, char *argv[])
 {
@@ -67,7 +68,7 @@ int main(int argc, char *argv[])
     c = (int *)as_malloc(16 * n * sizeof(int));
 
     // Print the amount of memory requested for array-1
-    printf("The amount of memory requested for array-1 is %d bytes", 16 * n * sizeof(int));
+    printf("The amount of memory requested for array-1 is %ld bytes", 16 * n * sizeof(int));
 
     // Assign values to the arrays - random values between 0 and 99
     // Store only one element in a cacheline and fill the rest of the elements in a cacheline with zeros

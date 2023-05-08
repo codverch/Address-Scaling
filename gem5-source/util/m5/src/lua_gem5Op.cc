@@ -159,6 +159,16 @@ do_dump_stats(lua_State *L)
     return 0;
 }
 
+// as_table_set will receive the virtual address and size as parameters 
+// and will set an entry in the Address Scaling Table in Gem5
+void
+as_table_set(lua_State *L)
+{
+    uint64_t vaddr = lua_tointeger(L, 1);
+    uint64_t size = lua_tointeger(L, 2);
+    m5_as_table_set(vaddr, size);
+}
+
 static int
 do_dump_reset_stats(lua_State *L)
 {
@@ -295,6 +305,7 @@ luaopen_gem5OpLua(lua_State *L)
     ADD_FUNC(do_panic);
     ADD_FUNC(do_work_begin);
     ADD_FUNC(do_work_end);
+    ADD_FUNC(as_table_set);
 #undef ADD_FUNC
     return 1;
 }

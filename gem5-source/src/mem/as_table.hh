@@ -34,7 +34,7 @@ namespace gem5
             {
                 // Start and end virtual address range of a segment
                 Addr startVirtualAddress;
-                Addr endVirtualAddress;
+                int size;
                 // Start scaled virtual address 
                 Addr startScaledVirtualAddress;
 
@@ -44,17 +44,23 @@ namespace gem5
             // Constructor - Initialize the scaling factor 
             AddressScalingTable(int _scalingFactor);
 
+            // Default Constructor
+            AddressScalingTable();
+
             // Desctructor
             ~AddressScalingTable();
 
-            // The scaling factor that needs to be applied to a virtual address
+            // The scaling factor that needs to be applied to a virtual address 
             int scalingFactor;
+
+            // End virtual address of the last segment
+            Addr endVirtualAddress;
 
             // Vector of Address Scaling Table Entries
             std::vector<AddressScalingEntry> asTable;
 
             // Add an entry to the address scaling table
-            void addEntry(Addr startVirtualAddress, Addr endVirtualAddress, int scalingFactor);
+            void addEntry(Addr _startVirtualAddress, int _size);
 
             // Check if the request falls within the virtual address range of a segment
             bool checkAddress(Addr requestAddress);
@@ -64,6 +70,11 @@ namespace gem5
 
             // Update the scaled virtual address range of a segment in the address scaling table
             void updateAddressScalingEntry(AddressScalingEntry &entry, Addr _startVirtualAddress);
+
+            // Return a pointer to the Address-Scaling Table
+             std::vector<AddressScalingEntry>* getAddressScalingTable();
+
+         
             
     };
 } // namespace gem5

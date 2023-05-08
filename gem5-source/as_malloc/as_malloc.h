@@ -8,7 +8,8 @@
 
 #include <stdlib.h>
 // Header for m5op
-// #include "gem5/m5ops.h"
+#include "/home/deepanjali/deepanjali/Address-Scaling/gem5-source/include/gem5/m5ops.h"
+
 
 
 // Initialize the scaling factor

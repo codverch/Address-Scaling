@@ -14,6 +14,13 @@
 
 namespace gem5
 {
+    /*
+    * Default Constructor
+    */
+    AddressScalingTable::AddressScalingTable()
+    {
+        // Do nothing
+    }
 
     /* 
     * Constructor: Takes the scaling factor as an argument and sets it.
@@ -22,6 +29,7 @@ namespace gem5
     {
         // Set the scaling factor
         scalingFactor = _scalingFactor;
+        
     }
 
     /*
@@ -29,20 +37,14 @@ namespace gem5
     * that needs to be scaled. Any address that falls within this range will be scaled whenever it is accessed.
     */
     void 
-    AddressScalingTable::addEntry(Addr _startVirtualAddress, Addr _endVirtualAddress,  int _scalingFactor)
+    AddressScalingTable::addEntry(Addr _startVirtualAddress, int _size)
     {
-
-        // Check that the end virtual address is greater than or equal to the start virtual address
-        if (_endVirtualAddress < _startVirtualAddress) 
-        {
-            throw "End virtual address must be greater than or equal to start virtual address";
-        }
         
         // Create a new entry in the address scaling table
         AddressScalingEntry newEntry;
         // Set the start and end virtual address range of the address scaling entry
         newEntry.startVirtualAddress = _startVirtualAddress;
-        newEntry.endVirtualAddress = _endVirtualAddress;
+        newEntry.size = _size;
         // Set the start scaled virtual address to 0 initially
         newEntry.startScaledVirtualAddress = 0;
         
@@ -63,7 +65,10 @@ namespace gem5
         for (int i = 0; i < asTable.size(); i++)
         {
             // Check if the request address falls within the virtual address range of the segment
-            if (requestAddress >= asTable[i].startVirtualAddress && requestAddress <= asTable[i].endVirtualAddress)
+            // Calculate the end virtual address of the segment, since the size of the segment is known
+            endVirtualAddress = asTable[i].startVirtualAddress + asTable[i].size;
+
+            if (requestAddress >= asTable[i].startVirtualAddress && requestAddress <= endVirtualAddress)
             {
                 return true;
             }
@@ -88,11 +93,14 @@ namespace gem5
         {
             // Find the segment that contains the request address
             AddressScalingEntry segment;
+
+            
             // Iterate through the address scaling table
             for (auto& entry : asTable)
             {
+                endVirtualAddress = entry.startVirtualAddress + entry.size;
                 // If the requested address matches any segment in the address scaling table, set the segment to that entry
-                if (requestAddress >= entry.startVirtualAddress && requestAddress <= entry.endVirtualAddress)
+                if (requestAddress >= entry.startVirtualAddress && requestAddress <= endVirtualAddress)
                 {
                     segment = entry;
                     // Break out of the loop
@@ -127,4 +135,14 @@ namespace gem5
         entry.startScaledVirtualAddress = _startVirtualAddress;
     }
         
+
+    /*
+    * Return a pointer to the address scaling table
+    */
+    
+    std::vector<AddressScalingTable::AddressScalingEntry>*
+    AddressScalingTable::getAddressScalingTable() {
+        return &asTable;
+    }
+  
 }
