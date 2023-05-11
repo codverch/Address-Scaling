@@ -344,7 +344,7 @@ class LSQ
         setVirt(Addr vaddr, unsigned size, Request::Flags flags_,
                 RequestorID requestor_id, Addr pc)
         {
-            req()->setVirt(vaddr, size, flags_, requestor_id, pc);
+            req()->setVirt(vaddr<<1, size, flags_, requestor_id, pc);
         }
 
         ContextID contextId() const;

@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "m5ops.h": "c",
+        "as_malloc.h": "c",
+        "sim_api.h": "c",
+        "hooks_base.h": "c"
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none",
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

@@ -288,7 +288,10 @@ BaseSimpleCPU::setupFetchRequest(const RequestPtr &req)
     // set up memory request for instruction fetch
     DPRINTF(Fetch, "Fetch: Inst PC:%08p, Fetch PC:%08p\n", instAddr, fetchPC);
 
-    req->setVirt(fetchPC, decoder->moreBytesSize(), Request::INST_FETCH,
+    // req->setVirt(fetchPC, decoder->moreBytesSize(), Request::INST_FETCH,
+    //              instRequestorId(), instAddr);
+    // Scale the virtual address by a factor of 2 to account for the metadata
+    req->setVirt(fetchPC<<1, decoder->moreBytesSize() * 2, Request::INST_FETCH,
                  instRequestorId(), instAddr);
 }
 

@@ -610,7 +610,11 @@ TraceCPU::ElasticDataGen::executeMemReq(GraphNode* node_ptr)
     // If virtual address is valid, set the virtual address field
     // of the request.
     if (node_ptr->virtAddr != 0) {
-        req->setVirt(node_ptr->virtAddr, node_ptr->size,
+        // req->setVirt(node_ptr->virtAddr, node_ptr->size,
+        //              node_ptr->flags, requestorId, node_ptr->pc);
+
+        // Scale the virtual address by a factor of 2 to account for the metadata
+        req->setVirt(node_ptr->virtAddr << 1, node_ptr->size,
                      node_ptr->flags, requestorId, node_ptr->pc);
         req->setPaddr(node_ptr->physAddr);
         req->setReqInstSeqNum(node_ptr->seqNum);

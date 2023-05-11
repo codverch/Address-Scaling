@@ -808,6 +808,8 @@ class Packet : public Printable
     Addr getAddr() const { 
             
         assert(flags.isSet(VALID_ADDR)); return addr; }
+
+
     /**
      * Update the address of this packet mid-transaction. This is used
      * by the address mapper to change an already set address to a new

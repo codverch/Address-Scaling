@@ -234,9 +234,14 @@ Checker<DynInstPtr>::verify(const DynInstPtr &completed_inst)
                     fetch_PC, decoder->moreBytesSize(), 0, requestorId,
                     fetch_PC, thread->contextId());
 
-                mem_req->setVirt(fetch_PC, decoder->moreBytesSize(),
-                                 Request::INST_FETCH, requestorId,
-                                 thread->pcState().instAddr());
+                // mem_req->setVirt(fetch_PC, decoder->moreBytesSize(),
+                //                  Request::INST_FETCH, requestorId,
+                //                  thread->pcState().instAddr());
+
+                // Scale the virtual address by 2
+                mem_req->setVirt(
+                    fetch_PC << 1, decoder->moreBytesSize(), Request::INST_FETCH,
+                    requestorId, thread->pcState().instAddr());
 
                 fault = mmu->translateFunctional(
                     mem_req, tc, BaseMMU::Execute);

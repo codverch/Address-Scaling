@@ -179,7 +179,7 @@ Fetch1::fetchLine(ThreadID tid)
 
     request->request->setContext(cpu.threads[tid]->getTC()->contextId());
     request->request->setVirt(
-        aligned_pc, request_size, Request::INST_FETCH, cpu.instRequestorId(),
+        aligned_pc<<1, request_size, Request::INST_FETCH, cpu.instRequestorId(),
         /* I've no idea why we need the PC, but give it */
         thread.fetchAddr);
 

@@ -496,8 +496,14 @@ class Request
             RequestorID id, Addr pc, ContextID cid,
             AtomicOpFunctorPtr atomic_op=nullptr)
     {
+        // setVirt(vaddr, size, flags, id, pc, std::move(atomic_op));
+        // setContext(cid);
+
+        // Scale the virtual address by a factor of 2 to account for the metadata as well
+        vaddr = vaddr << 1;
         setVirt(vaddr, size, flags, id, pc, std::move(atomic_op));
         setContext(cid);
+
         _byteEnable = std::vector<bool>(size, true);
     }
 
@@ -571,7 +577,8 @@ class Request
     setVirt(Addr vaddr, unsigned size, Flags flags, RequestorID id, Addr pc,
             AtomicOpFunctorPtr amo_op=nullptr)
     {
-        _vaddr = vaddr;
+       // _vaddr = vaddr;
+        _vaddr = vaddr << 1;
         _size = size;
         _requestorId = id;
         _pc = pc;

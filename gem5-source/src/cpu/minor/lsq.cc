@@ -505,7 +505,7 @@ LSQ::SplitDataRequest::makeFragmentRequests()
             (fragment_addr - base_addr) + fragment_size;
         if (isAnyActiveElement(it_start, it_end)) {
             fragment->setVirt(
-                fragment_addr, fragment_size, request->getFlags(),
+                fragment_addr<<1, fragment_size, request->getFlags(),
                 request->requestorId(),
                 request->getPC());
             fragment->setByteEnable(std::vector<bool>(it_start, it_end));
@@ -1643,7 +1643,7 @@ LSQ::pushRequest(MinorDynInstPtr inst, bool isLoad, uint8_t *data,
     int cid = cpu.threads[inst->id.threadId]->getTC()->contextId();
     request->request->setContext(cid);
     request->request->setVirt(
-        addr, size, flags, cpu.dataRequestorId(),
+        addr<<1, size, flags, cpu.dataRequestorId(),
         /* I've no idea why we need the PC, but give it */
         inst->pc->instAddr(), std::move(amo_op));
     request->request->setByteEnable(byte_enable);

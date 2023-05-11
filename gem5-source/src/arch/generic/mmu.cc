@@ -105,6 +105,7 @@ BaseMMU::translateAtomic(const RequestPtr &req, ThreadContext *tc,
                          BaseMMU::Mode mode)
 {
     return getTlb(mode)->translateAtomic(req, tc, mode);
+    
 }
 
 void
@@ -144,14 +145,20 @@ BaseMMU::MMUTranslationGen::translate(Range &range) const
         next += pageBytes;
     range.size = std::min(range.size, next - range.vaddr);
 
+    // Scale the virtual address space by 2
+    Addr vaddr = range.vaddr << 1;
+    Addr size = range.size << 1;
     auto req = std::make_shared<Request>(
-            range.vaddr, range.size, flags, Request::funcRequestorId, 0, cid);
+        range.vaddr, range.size, flags, Request::funcRequestorId, 0, cid);
+
 
     range.fault = mmu->translateFunctional(req, tc, mode);
 
     if (range.fault == NoFault)
         range.paddr = req->getPaddr();
 }
+
+
 
 void
 BaseMMU::takeOverFrom(BaseMMU *old_mmu)

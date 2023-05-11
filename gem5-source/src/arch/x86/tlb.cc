@@ -336,6 +336,7 @@ TLB::translate(const RequestPtr &req,
     }
 
     Addr vaddr = req->getVaddr();
+
     DPRINTF(TLB, "Translating vaddr %#x.\n", vaddr);
 
     HandyM5Reg m5Reg = tc->readMiscRegNoEffect(misc_reg::M5Reg);

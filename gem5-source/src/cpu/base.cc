@@ -255,7 +255,11 @@ BaseCPU::mwaitAtomic(ThreadID tid, ThreadContext *tc, BaseMMU *mmu)
     if (secondAddr > addr)
         size = secondAddr - addr;
 
-    req->setVirt(addr, size, 0x0, dataRequestorId(),
+    // req->setVirt(addr, size, 0x0, dataRequestorId(),
+    //         tc->pcState().instAddr());
+
+    // Scale the virtual address by 2
+    req->setVirt(addr<<1, size, 0x0, dataRequestorId(),
             tc->pcState().instAddr());
 
     // translate to physical address
